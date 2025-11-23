@@ -30,9 +30,7 @@ spec:
               memory: "8Gi"
               cpu: "2000m"
           
-          # --- FIXED
-
- PROBES (CRITICAL) ---
+          # --- FIXEDPROBES (CRITICAL) ---
           livenessProbe:
             httpGet:
               path: /login.spr
