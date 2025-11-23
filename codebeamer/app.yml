@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: codebeamer
-          # Fixed the line break here
-          image: intland/codebeamer
+          # Using specific version tag for stability
+          image: intland/codebeamer:22.10-SP3
           ports:
             - containerPort: 8080
               name: http
@@ -29,20 +29,32 @@ spec:
             limits:
               memory: "8Gi"
               cpu: "2000m"
+          
+          # --- FIXED
+
+ PROBES (CRITICAL) ---
           livenessProbe:
             httpGet:
-              path: /cb/login.spr
+              path: /login.spr
               port: 8080
-            initialDelaySeconds: 120
+            initialDelaySeconds: 180
             periodSeconds: 20
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
-              path: /login.spr  # CHANGED from /cb/login.spr
+              path: /login.spr
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 10
+            timeoutSeconds: 5
+          # -------------------------------
+
           env:
-            # IMPORTANT: Update these with your actual DB credentials
+            # Enables logs in "kubectl logs"
+            - name: CB_DOCKER_LOGGING
+              value: "true"
+            
+            # Database Configuration
             - name: CB_database_driver
               value: "org.postgresql.Driver"
             - name: CB_database_url
@@ -51,7 +63,7 @@ spec:
               value: "codebeamer"
             - name: CB_database_password
               value: "Zq{Cq5aDMJBSF}!}Pi0v)2c]"
+            
+            # System Settings
             - name: TZ
               value: "Europe/Warsaw"
-            - name: CB_DOCKER_LOGGING
-              value: "true"

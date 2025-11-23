@@ -2,8 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: codebeamer-service
-  namespace: codebeamer 
+  namespace: codebeamer
   annotations:
+    # Creates Private IP in VNet
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   type: LoadBalancer
