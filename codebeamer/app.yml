@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codebeamer
+  namespace: codebeamer
+  labels:
+    app: codebeamer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codebeamer
+  template:
+    metadata:
+      labels:
+        app: codebeamer
+    spec:
+      containers:
+        - name: codebeamer
+          # Fixed the line break here
+          image: intland/codebeamer
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "1000m"
+            limits:
+              memory: "8Gi"
+              cpu: "2000m"
+          livenessProbe:
+            httpGet:
+              path: /cb/login.spr
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /cb/login.spr
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          env:
+            # IMPORTANT: Update these with your actual DB credentials
+            - name: CB_database_driver
+              value: "org.postgresql.Driver"
+            - name: CB_database_url
+              value: "jdbc:postgresql://your-db-host:5432/codebeamer"
+            - name: CB_database_username
+              value: "cbuser"
+            - name: CB_database_password
+              value: "cbpassword"
+            - name: TZ
+              value: "Europe/Warsaw"
