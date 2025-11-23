@@ -37,7 +37,7 @@ spec:
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /cb/login.spr
+              path: /login.spr  # CHANGED from /cb/login.spr
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 10
