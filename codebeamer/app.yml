@@ -46,10 +46,12 @@ spec:
             - name: CB_database_driver
               value: "org.postgresql.Driver"
             - name: CB_database_url
-              value: "jdbc:postgresql://psql-codebeamer-prd.postgres.database.azure.com:5432/postgres?user=codebeamer&password=Zq{Cq5aDMJBSF}!}Pi0v)2c]&sslmode=require"
+              value: "jdbc:postgresql://psql-codebeamer-prd.postgres.database.azure.com:5432/codebeamer?sslmode=require"
             - name: CB_database_username
               value: "codebeamer"
             - name: CB_database_password
               value: "Zq{Cq5aDMJBSF}!}Pi0v)2c]"
             - name: TZ
               value: "Europe/Warsaw"
+            - name: CB_DOCKER_LOGGING
+              value: "true"
